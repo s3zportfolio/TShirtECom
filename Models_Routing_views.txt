@@ -1,0 +1,68 @@
+Create Model
+Register in Admin
+serializers.py
+views to get all category
+Setup URL
+
+
+Category folder
+
+1.New File -> serializers.py and urls.py
+2.models.py
+class Category(models.Model):
+	name = charfield(max length)
+	description=charfield
+	created_at=datetimefield(auto_now_add)
+	updated_at=datetimefield(auto_now)
+	def __str__(self):
+		return self.name
+3. Admin.py
+ from .models import Category
+ 
+ admin.site.register(Category)
+ 
+4. Main settings.py
+Installed Apps -> 'api.category'
+
+5. DJango Rest Framework documentation
+	Serialization
+6.Migrate
+7. serializers.py
+   from rest_framework import serializers
+   from .models import Category
+   
+   class CategorySerializer(serializers.HyperLinkedModelSerializer):
+	class Meta:
+		model = Category
+		fields=('name','description'
+8. DJango Rest Framework documentation
+		viewsets and routing
+9. Views.py
+	from rest_framework import viewsets
+	from .serializers import CategorySerializer
+	from .models import Category
+
+	class CategoryViewSet(viewsets.ModelViewSet):
+	
+		queryset = Category.objects.all().order_by('name')
+		serializer_class= CategorySerializer
+10. api urls.py
+	path('category/',include('api.category.urls'))
+11. Routers
+
+Category URLS.py
+from rest_framework import routers
+from DJango.urls import path.include
+from . import views
+
+
+router = routers.DefaultRouter()
+router.register(r'', views.categoryviewset)
+
+urlpatterns = [
+	path('',include(router.urls))
+]
+
+ 
+ 
+

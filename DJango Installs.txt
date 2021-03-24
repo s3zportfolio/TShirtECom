@@ -1,0 +1,113 @@
+Django/Python
+
+1. Install Python
+2. mkdir <folderName>
+3. Cd <folderName>
+4. pip install pipenv
+5. pipenv shell
+6. Drag the pipfile on VSCode
+7. pip freeze-List all files
+8. pipenv install DJango==3.0.8
+9. django-admin startproject <ProjectName>ecom
+10.cd <ProjectName>
+11.python manage.py runserver
+12.Python manage.py makemigrations
+13.python manage.py migrate
+14.python manage.py createsuperuser
+
+Project Setup
+1.Github CORS HEaders. pipenv install django-cors-headers
+2.Settings.py -> InstalledApps - 'corsheaders'
+3.Settings.py -> MIddleware- 'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+4.Settings.py - > CCORS_ALLOW_ALL_ORIGINS = True at bottom
+5. Allowed_Hosts=['*']
+
+Rest Framework
+1.Django Rest Framework- pipenv install djangorestframework
+2.Settings.py -> InstalledApps ->'rest_framework', 'rest_framework.authtoken
+3.Settings.py - at bottom
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+4.Rest Framework documentation->API Guide->Authentication
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
+
+combined
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+		'rest_framework.authentication.TokenAuthentication',
+    ],
+	'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+	
+}
+
+5. Url Patterns
+urls.py from django.urls import include
+
+urlpatterns = [
+    ...
+    path('api-auth/', include('rest_framework.urls'))
+]
+
+Image storing
+
+New Folder
+1. create media folder
+2. settings.py
+	MEDIA_URL = '/media/'
+3. MEDIA_ROOT= os.path.join(BASE_DIR,'media')
+
+4. Urls.py
+from django.conf.urls.static import static
+from django.conf import settings
+urlpattern +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+---Start from here- 23032021
+APIStructure
+
+1. django-dmin startapp api
+2. cd api
+3. django-admin startapp category, user, product, order, payment
+API Routes
+
+1.Settings.py -> InstalledApps => 'api'
+2. UrlPatterns
+	path('api/',include('api.urls'))
+
+3. API Urls
+	new file urls.py
+	from django.urls import path, include
+	from rest_framework.authtoken import views
+	from .views import home
+	
+	urlpatterns=[
+	
+		path('',home,name='api.home')
+	]
+	
+4. views 
+from django.http import JsonResponse
+def home(request):
+		return JsonResponse({})
+	
+	
+
+
+
+
+
